@@ -1,0 +1,36 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "L'appareil est déjà configuré"
+        },
+        "error": {
+            "cannot_connect": "Connection impossible",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "host": "Host",
+                    "password": "Password",
+                    "username": "Username"
+                }
+            }
+        }
+    }
+    ,
+    "state": {
+        "_": {
+            "check": "Vérification",
+            "clean_all": "Nettoyage",
+            "loading": "Chargement",
+            "waiting": "Attente",
+            "ignition": "Allumage",
+            "stabilization": "Stabilisation",
+            "heating": "Feu!",
+            "stopping": "Arrêt",
+            "idle": "Standby",
+            "end_pellet": "Plus de Pellet"
+        }
+    }
+}

@@ -1,0 +1,51 @@
+set_temperature:
+  description: Set Stove Temperature
+  fields:
+    value:
+      name: Value
+      description: The target value the entity should be set to.
+      required: true
+      selector:
+        number:
+          min: 15
+          max: 30
+          step: 0.1
+          mode: box
+
+set_power_level:
+  description: Set Stove Power Level
+  fields:
+    value:
+      name: Value
+      description: The target value the entity should be set to.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 10
+          mode: box
+
+eco_mode_turn_on:
+  name: Turn On Eco Mode
+  description: Turn On Eco Mode.
+
+eco_mode_turn_off:
+  name: Turn Off Eco Mode
+  description: Turn Off Eco Mode.
+
+chrono_mode_turn_on:
+  name: Turn On Chrono Mode
+  description: Turn On Chrono Mode.
+
+chrono_mode_turn_off:
+  name: Turn Off Chrono Mode
+  description: Turn Off Chrono Mode.
+
+turn_on:
+  name: Turn On
+  description: Turn On.
+
+turn_off:
+  name: Turn Off
+  description: Turn Off.

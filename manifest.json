@@ -1,0 +1,16 @@
+{
+  "domain": "hottoh",
+  "version": "0.0.1",
+  "name": "HottoH",
+  "config_flow": true,
+  "documentation": "https://github.com/benlbrm/ha-hottoh-componant",
+  "requirements": ["hottohpy"],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": [
+    "@benlbrm"
+  ],
+  "iot_class": "local_polling"
+}

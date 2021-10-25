@@ -1,0 +1,36 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "host": "Host",
+                    "password": "Password",
+                    "username": "Username"
+                }
+            }
+        }
+    }
+    ,
+    "state": {
+        "_": {
+            "check": "Check",
+            "clean_all": "Cleaning",
+            "loading": "Loading",
+            "waiting": "Waiting",
+            "ignition": "Ignition",
+            "stabilization": "Stabilization",
+            "heating": "Fire",
+            "stopping": "Stopping",
+            "idle": "Standby",
+            "end_pellet": "No Pellet"
+        }
+    }
+}
