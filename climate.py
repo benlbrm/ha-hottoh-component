@@ -76,14 +76,12 @@ class HottohDevice(ClimateEntity):
 
     @property
     def hvac_mode(self):
-        _LOGGER.debug('Stove Mode: ' + self.api.get_mode())
         if self.api.get_mode() == "on":
             return HVAC_MODE_HEAT
         return HVAC_MODE_OFF
 
     @property
     def hvac_action(self):
-        _LOGGER.debug('Stove Action: ' + self.api.get_action())
         return self.api.get_action()
 
     @property

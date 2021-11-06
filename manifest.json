@@ -4,13 +4,18 @@
   "name": "HottoH",
   "config_flow": true,
   "documentation": "https://github.com/benlbrm/ha-hottoh-component",
-  "requirements": ["hottohpy==0.0.4"],
+  "requirements": ["hottohpy==0.0.16"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},
   "dependencies": [],
   "codeowners": [
     "@benlbrm"
+  ],
+  "dhcp": [
+    {
+      "macaddress": "C49300*"
+    }
   ],
   "iot_class": "local_polling"
 }
