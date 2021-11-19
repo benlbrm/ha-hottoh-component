@@ -40,8 +40,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     )
 
     info = await async_connect_or_timeout(hass, hottoh)
-    if info:
-        await async_disconnect_or_timeout(hass, hottoh)
+    
+    await async_disconnect_or_timeout(hass, hottoh)
 
     return {
         HOTTOH_SESSION: hottoh,
