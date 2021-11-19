@@ -13,7 +13,10 @@
                 "data": {
                     "host": "Host",
                     "password": "Password",
-                    "username": "Username"
+                    "username": "Username",
+                    "away_temp": "Away Temp",
+                    "comfort_temp": "Comfort Temp",
+                    "eco_temp": "Eco Temp"
                 }
             }
         }

@@ -131,109 +131,6 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
 
     return unload_ok
 
-# async def options_updated_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
-#     """Handle options update."""
-#     if entry.options[CONF_MANUAL]:
-#         hass.data[DOMAIN].update_interval = None
-#         return
-
-#     hass.data[DOMAIN].update_interval = timedelta(
-#         seconds=entry.options[CONF_SCAN_INTERVAL]
-#     )
-#     await hass.data[DOMAIN].async_request_refresh()
-
-# class HottohDataCoordinator(DataUpdateCoordinator):
-#     """Get the latest data from the Stove"""
-
-#     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
-#         """Initialize the data object."""
-#         self.hass = hass
-#         self.config_entry = config_entry
-#         self.api = Stove(config_entry.data[CONF_IP_ADDRESS], config_entry.data[CONF_PORT]) 
-#         super().__init__(
-#             self.hass,
-#             _LOGGER,
-#             name=DOMAIN,
-#             update_method=self.update_data,
-#             update_interval=timedelta(seconds=15),
-#         )
-    
-#     async def initialize(self)->None:
-#         "Initialize Hottoh Api"
-#         self.api = Stove(config_entry.data[CONF_IP_ADDRESS], config_entry.data[CONF_PORT])
-#         await self.api.refresh()
-
-#     async def async_update(self) -> dict[str, str]:
-#         """Update Stove data."""
-#         return await self.hass.async_add_executor_job(self.update_data)
-
-#     async def update_data(self):
-#         """Get the latest data from the stove."""
-#         data = await self.api.refresh()
-#         _LOGGER.debug('Received data', data)
-#         return data
-
-#     async def async_setup(self) -> None:
-#         """Set up Hottoh."""
-#         await self.hass.async_add_executor_job(self.initialize)
-
-#         async def stoveSetTemperature(call) -> None:
-#             """Set Stove Temperature."""
-#             # _LOGGER.info('Received data', call.data["value"])
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setTemperature(call.data["value"])
-#             # await self.async_update()
-
-#         async def stoveSetPowerLevel(call) -> None:
-#             """Set Stove Power Level."""
-#             # _LOGGER.info('Received data', call.data["value"])
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setPowerLevel(call.data["value"])
-
-#         async def stoveSetEcoModeOn(call) -> None:
-#             """Set Stove Eco Mode On."""
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setEcoModeOn()
-
-#         async def stoveSetEcoModeOff(call) -> None:
-#             """Set Stove Eco Mode Off."""
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setEcoModeOff()
-
-#         async def stoveSetChronoModeOn(call) -> None:
-#             """Set Stove Chrono Mode On."""
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setEcoModeOn()
-
-#         async def stoveSetChronoModeOff(call) -> None:
-#             """Set Stove Chrono Mode Off."""
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setEcoModeOff()
-
-#         async def stoveSetOn(call) -> None:
-#             """Set Stove On."""
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setOn()
-
-#         async def stoveSetOff(call) -> None:
-#             """Set Stove Off."""
-#             #stove = Stove(entry.data[CONF_IP_ADDRESS], entry.data[CONF_PORT])
-#             await self.api.setOff()
-
-#         # Register our service with Home Assistant.
-#         self.hass.services.async_register(DOMAIN, "set_temperature", stoveSetTemperature)
-#         self.hass.services.async_register(DOMAIN, "set_power_level", stoveSetPowerLevel)
-#         self.hass.services.async_register(DOMAIN, "eco_mode_turn_on", stoveSetEcoModeOn)
-#         self.hass.services.async_register(DOMAIN, "eco_mode_turn_off", stoveSetEcoModeOff)
-#         self.hass.services.async_register(DOMAIN, "chrono_mode_turn_on", stoveSetChronoModeOn)
-#         self.hass.services.async_register(DOMAIN, "chrono_mode_turn_off", stoveSetChronoModeOff)
-#         self.hass.services.async_register(DOMAIN, "turn_on", stoveSetOn)
-#         self.hass.services.async_register(DOMAIN, "turn_off", stoveSetOff)
-
-#         self.config_entry.async_on_unload(
-#             self.config_entry.add_update_listener(options_updated_listener)
-#         )
-
 async def async_connect_or_timeout(hass, hottoh):
     """Connect to HottoH."""
     try:
@@ -272,19 +169,6 @@ async def async_disconnect_or_timeout(hass, hottoh):
 async def async_update_options(hass, config_entry):
     """Update options."""
     await hass.config_entries.async_reload(config_entry.entry_id)
-
-# async def async_unload_entry(hass, config_entry):
-#     """Unload a config entry."""
-#     unload_ok = await hass.config_entries.async_unload_platforms(
-#         config_entry, PLATFORMS
-#     )
-#     if unload_ok:
-#         domain_data = hass.data[DOMAIN][config_entry.entry_id]
-#         domain_data[CANCEL_STOP]()
-#         await async_disconnect_or_timeout(hass, hottoh=domain_data[HOTTOH_SESSION])
-#         hass.data[DOMAIN].pop(config_entry.entry_id)
-
-#     return unload_ok
 
 class CannotConnect(exceptions.HomeAssistantError):
     """Error to indicate we cannot connect."""

@@ -13,7 +13,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
-from .const import DOMAIN, HOTTOH_DEFAULT_HOST, HOTTOH_DEFAULT_PORT, HOTTOH_SESSION
+from .const import DOMAIN, HOTTOH_DEFAULT_HOST, HOTTOH_DEFAULT_PORT, HOTTOH_SESSION, CONF_AWAY_TEMP, CONF_COMFORT_TEMP, CONF_ECO_TEMP
 from hottohpy import Hottoh
 from . import CannotConnect, async_connect_or_timeout, async_disconnect_or_timeout
 
@@ -23,6 +23,9 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST, default=HOTTOH_DEFAULT_HOST): str,
         vol.Required(CONF_PORT, default=HOTTOH_DEFAULT_PORT): int,
+        vol.Optional(CONF_AWAY_TEMP, default=15.00): vol.Coerce(float),
+        vol.Optional(CONF_COMFORT_TEMP, default=20.00): vol.Coerce(float),
+        vol.Optional(CONF_ECO_TEMP, default=18.00): vol.Coerce(float),
     }
 )
 
@@ -44,6 +47,9 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         HOTTOH_SESSION: hottoh,
         CONF_NAME: info[CONF_NAME],
         CONF_HOST: data[CONF_HOST],
+        CONF_AWAY_TEMP: data[CONF_AWAY_TEMP],
+        CONF_COMFORT_TEMP: data[CONF_COMFORT_TEMP],
+        CONF_ECO_TEMP: data[CONF_ECO_TEMP]
     }
 
 
