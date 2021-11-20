@@ -1,10 +1,10 @@
 {
   "domain": "hottoh",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "name": "HottoH",
   "config_flow": true,
   "documentation": "https://github.com/benlbrm/ha-hottoh-component",
-  "requirements": ["hottohpy==0.0.21"],
+  "requirements": ["hottohpy==0.0.22"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},

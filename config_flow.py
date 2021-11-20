@@ -58,26 +58,26 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    async def async_step_dhcp(self, discovery_info):
-        """Handle dhcp discovery."""
-        _LOGGER.debug(discovery_info)
-        host = discovery_info[IP_ADDRESS]
-        unique_id = discovery_info[MAC_ADDRESS].lower().replace(":", "")
-        await self.async_set_unique_id(unique_id)
-        self._abort_if_unique_id_configured(updates={CONF_HOST: host})
+    # async def async_step_dhcp(self, discovery_info):
+    #     """Handle dhcp discovery."""
+    #     _LOGGER.debug(discovery_info)
+    #     host = discovery_info[IP_ADDRESS]
+    #     unique_id = discovery_info[MAC_ADDRESS].lower().replace(":", "")
+    #     await self.async_set_unique_id(unique_id)
+    #     self._abort_if_unique_id_configured(updates={CONF_HOST: host})
 
-        try:
-            info = await validate_input(self.hass, [host, HOTTOH_DEFAULT_PORT])
+    #     try:
+    #         info = await validate_input(self.hass, [host, HOTTOH_DEFAULT_PORT])
 
-        except CannotConnect:
-            return self.async_abort(reason="cannot_connect")
+    #     except CannotConnect:
+    #         return self.async_abort(reason="cannot_connect")
 
-        except OSError as err:
-            return self.async_abort(reason="unknown")
+    #     except OSError as err:
+    #         return self.async_abort(reason="unknown")
 
-        await self.async_set_device(info)
+    #     await self.async_set_device(info)
  
-        return self.async_show_form(step_id="dhcp", errors=None)
+    #     return self.async_show_form(step_id="dhcp", errors=None)
 
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
