@@ -82,11 +82,11 @@ class HottohDevice(ClimateEntity):
 
     @property
     def current_temperature(self):
-        return self.api.get_temperature()
+        return self.api.get_temperature_room_1()
 
     @property
     def target_temperature(self):
-        return self.api.get_set_temperature()
+        return self.api.get_set_temperature_room_1()
 
     @property
     def hvac_mode(self):
