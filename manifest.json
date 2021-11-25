@@ -4,7 +4,7 @@
   "name": "HottoH",
   "config_flow": true,
   "documentation": "https://github.com/benlbrm/ha-hottoh-component",
-  "requirements": ["hottohpy==0.0.23"],
+  "requirements": ["hottohpy==0.0.24"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},

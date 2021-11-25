@@ -77,35 +77,47 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
 
     def stoveSetTemperature(call) -> None:
         """Set Stove Temperature."""
-        hottoh.setTemperature(call.data["value"])
+        hottoh.set_temperature(call.data["value"])
 
     def stoveSetPowerLevel(call) -> None:
         """Set Stove Power Level."""
-        hottoh.setPowerLevel(call.data["value"])
+        hottoh.set_power_level(call.data["value"])
+
+    def stoveSetSpeedFan1(call) -> None:
+        """Set Stove Fan 1 Speed."""
+        hottoh.set_speed_fan_1(call.data["value"])
+
+    def stoveSetSpeedFan2(call) -> None:
+        """Set Stove Fan 2 Speed."""
+        hottoh.set_speed_fan_2(call.data["value"])
+
+    def stoveSetSpeedFan3(call) -> None:
+        """Set Stove Fan 3 Speed."""
+        hottoh.set_speed_fan_3(call.data["value"])
 
     def stoveSetEcoModeOn(call) -> None:
         """Set Stove Eco Mode On."""
-        hottoh.setEcoModeOn()
+        hottoh.set_eco_mode_on()
 
     def stoveSetEcoModeOff(call) -> None:
         """Set Stove Eco Mode Off."""
-        hottoh.setEcoModeOff()
+        hottoh.set_eco_mode_off()
 
     def stoveSetChronoModeOn(call) -> None:
         """Set Stove Chrono Mode On."""
-        hottoh.setEcoModeOn()
+        hottoh.set_chrono_mode_on()
 
     def stoveSetChronoModeOff(call) -> None:
         """Set Stove Chrono Mode Off."""
-        hottoh.setEcoModeOff()
+        hottoh.set_chrono_mode_off()
 
     def stoveSetOn(call) -> None:
         """Set Stove On."""
-        hottoh.setOn()
+        hottoh.set_on()
 
     def stoveSetOff(call) -> None:
         """Set Stove Off."""
-        hottoh.setOff()
+        hottoh.set_off()
 
     # Register our service with Home Assistant.
     hass.services.async_register(DOMAIN, "set_temperature", stoveSetTemperature)
@@ -116,6 +128,17 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     hass.services.async_register(DOMAIN, "chrono_mode_turn_off", stoveSetChronoModeOff)
     hass.services.async_register(DOMAIN, "turn_on", stoveSetOn)
     hass.services.async_register(DOMAIN, "turn_off", stoveSetOff)
+
+    if hottoh.getFanNumber() == 1:
+        hass.services.async_register(DOMAIN, "set_speed_fan_1", stoveSetSpeedFan1)
+    if hottoh.getFanNumber() == 2:
+        hass.services.async_register(DOMAIN, "set_speed_fan_1", stoveSetSpeedFan1)
+        hass.services.async_register(DOMAIN, "set_speed_fan_2", stoveSetSpeedFan2)
+    if hottoh.getFanNumber() == 3:
+        hass.services.async_register(DOMAIN, "set_speed_fan_1", stoveSetSpeedFan1)
+        hass.services.async_register(DOMAIN, "set_speed_fan_2", stoveSetSpeedFan2)
+        hass.services.async_register(DOMAIN, "set_speed_fan_3", stoveSetSpeedFan3)
+
     return True
 
 async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:

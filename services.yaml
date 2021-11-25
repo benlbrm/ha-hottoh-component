@@ -22,10 +22,51 @@ set_power_level:
       selector:
         number:
           min: 0
-          max: 100
-          step: 10
+          max: 10
+          step: 1
           mode: box
 
+set_speed_fan_1:
+  description: Set Stove Speed Fan 1
+  fields:
+    value:
+      name: Value
+      description: The target value the entity should be set to.
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 6
+          step: 1
+          mode: box
+
+set_speed_fan_2:
+  description: Set Stove Speed Fan 2
+  fields:
+    value:
+      name: Value
+      description: The target value the entity should be set to.
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 6
+          step: 1
+          mode: box
+
+set_speed_fan_3:
+  description: Set Stove Speed Fan 3
+  fields:
+    value:
+      name: Value
+      description: The target value the entity should be set to.
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 6
+          step: 1
+          mode: box
 eco_mode_turn_on:
   name: Turn On Eco Mode
   description: Turn On Eco Mode.

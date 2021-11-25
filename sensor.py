@@ -29,8 +29,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     entities = []
     entities.append(HottohActionSensor(hottoh))
     entities.append(HottohSensor(hottoh, 'smoke_temperature', 'mdi:smoke', DEVICE_CLASS_TEMPERATURE, TEMP_CELSIUS))
-    entities.append(HottohSensor(hottoh, 'speed_fan_smoke', 'mdi:fan', '', 'rpm'))
-    entities.append(HottohSensor(hottoh, 'air_ex_1', 'mdi:air-filter', DEVICE_CLASS_TEMPERATURE, TEMP_CELSIUS))
+    entities.append(HottohSensor(hottoh, 'speed_fan_smoke', 'mdi:fan', '', 'g/m'))
 
     if hottoh.isTempRoom1Enabled():
         entities.append(HottohSensor(hottoh, 'temperature_room_1', 'mdi:thermometer', DEVICE_CLASS_TEMPERATURE, TEMP_CELSIUS))
@@ -43,6 +42,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     for fan in range(1, hottoh.getFanNumber() + 1):
         entities.append(HottohSensor(hottoh, 'speed_fan_' + str(fan), 'mdi:fan', DEVICE_CLASS_POWER_FACTOR, PERCENTAGE))
+        entities.append(HottohSensor(hottoh, 'air_ex_' + str(fan), 'mdi:air-filter', DEVICE_CLASS_POWER_FACTOR, PERCENTAGE))
 
     entities.append(HottohSensor(hottoh, 'power_level', 'mdi:fan', DEVICE_CLASS_POWER_FACTOR, PERCENTAGE))
 

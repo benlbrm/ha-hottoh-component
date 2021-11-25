@@ -16,6 +16,7 @@ from homeassistant.components.climate.const import (
     CURRENT_HVAC_IDLE,
     SUPPORT_TARGET_TEMPERATURE,
     SUPPORT_PRESET_MODE,
+    SUPPORT_FAN_MODE,
     PRESET_AWAY,
     PRESET_NONE,
     PRESET_ECO,
@@ -51,7 +52,7 @@ class HottohDevice(ClimateEntity):
     _attr_hvac_modes = [HVAC_MODE_HEAT, HVAC_MODE_OFF]
     _attr_max_temp = 30
     _attr_min_temp = 15
-    _attr_supported_features = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
+    _attr_supported_features = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE | SUPPORT_FAN_MODE
     _attr_target_temperature_step = PRECISION_HALVES
     _attr_temperature_unit = TEMP_CELSIUS
     _attr_preset_mode = PRESET_NONE
@@ -172,6 +173,27 @@ class HottohDevice(ClimateEntity):
         if hvac_mode == HVAC_MODE_OFF:
             await self.hass.async_add_executor_job(
                 self.api.setOff
+            )
+
+    @property
+    def fan_mode(self):
+        return str(self.api.get_set_speed_fan_1())
+
+    @property 
+    def fan_modes(self):
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6'
+        ]
+
+    async def async_set_fan_mode(self, fan_mode):
+        """Set new target fan mode."""
+        await self.hass.async_add_executor_job(
+                self.api.set_speed_fan_1, fan_mode
             )
 
     @property
