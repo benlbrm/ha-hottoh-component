@@ -143,7 +143,7 @@ class HottohDevice(ClimateEntity):
         if temperature is None:
             return
         await self.hass.async_add_executor_job(
-            self.api.setTemperature, temperature
+            self.api.set_temperature, temperature
         )
     
     async def async_set_preset_mode(self, preset_mode):
@@ -151,14 +151,14 @@ class HottohDevice(ClimateEntity):
         if preset_mode not in self.preset_modes:
             return None
         if preset_mode == PRESET_ECO:
-            await self.hass.async_add_executor_job(self.api.setTemperature, self._eco_temp)
-            await self.hass.async_add_executor_job(self.api.setEcoModeOn)
+            await self.hass.async_add_executor_job(self.api.set_temperature, self._eco_temp)
+            await self.hass.async_add_executor_job(self.api.set_eco_mode_on)
         if preset_mode == PRESET_COMFORT:
-            await self.hass.async_add_executor_job(self.api.setTemperature, self._comfort_temp)
-            await self.hass.async_add_executor_job(self.api.setEcoModeOff)
+            await self.hass.async_add_executor_job(self.api.set_temperature, self._comfort_temp)
+            await self.hass.async_add_executor_job(self.api.set_eco_mode_off)
         if preset_mode == PRESET_AWAY:
-            await self.hass.async_add_executor_job(self.api.setTemperature, self._away_temp)
-            await self.hass.async_add_executor_job(self.api.setEcoModeOn)
+            await self.hass.async_add_executor_job(self.api.set_temperature, self._away_temp)
+            await self.hass.async_add_executor_job(self.api.set_eco_mode_on)
 
         self._attr_preset_mode = preset_mode
         await self.async_update_ha_state()
@@ -167,12 +167,12 @@ class HottohDevice(ClimateEntity):
         """Set new target hvac mode."""
         if hvac_mode == HVAC_MODE_HEAT:
             await self.hass.async_add_executor_job(
-                self.api.setOn
+                self.api.set_on
             )
 
         if hvac_mode == HVAC_MODE_OFF:
             await self.hass.async_add_executor_job(
-                self.api.setOff
+                self.api.set_off
             )
 
     @property
