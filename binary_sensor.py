@@ -1,14 +1,10 @@
 """Support for Hottoh Climate Entity."""
-from datetime import timedelta
-import json
 import logging
-import asyncio
-import async_timeout
 
-from homeassistant.helpers.entity import Entity
 from homeassistant.components.binary_sensor import BinarySensorEntity
 
 from .const import DOMAIN, HOTTOH_SESSION
+from . import HottohEntity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,16 +14,16 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     hottoh = domain_data[HOTTOH_SESSION]
 
     entities = []
-    if hottoh.isPumpEnabled:
+    if hottoh.isPumpEnabled():
         entities.append(HottohBinarySensor(hottoh, "water_pump", "mdi:pump"))
 
     async_add_entities(entities, True)
 
-class HottohBinarySensor(BinarySensorEntity):
-    SCAN_INTERVAL = timedelta(seconds=10)
+class HottohBinarySensor(HottohEntity, BinarySensorEntity):
     """Representation of a Hottoh Binary Sensor"""
     def __init__(self, hottoh, name, icon):
         """Initialize the Sensor."""
+        HottohEntity.__init__(self, hottoh)
         BinarySensorEntity.__init__(self)
         self.api = hottoh
         self.nameSet = name

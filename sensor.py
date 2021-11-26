@@ -1,16 +1,9 @@
 """Support for Hottoh Climate Entity."""
-from datetime import timedelta
-import json
 import logging
-import asyncio
-import async_timeout
 
-from homeassistant.helpers.entity import Entity
 from homeassistant.components.sensor import SensorEntity
 
 from homeassistant.const import (
-    ATTR_TEMPERATURE,
-    PRECISION_HALVES,
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_POWER_FACTOR,
     TEMP_CELSIUS,
@@ -18,6 +11,7 @@ from homeassistant.const import (
 )
 
 from .const import DOMAIN, HOTTOH_SESSION
+from . import HottohEntity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,11 +42,11 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     async_add_entities(entities, True)
 
-class HottohSensor(SensorEntity):
-    SCAN_INTERVAL = timedelta(seconds=10)
+class HottohSensor(HottohEntity, SensorEntity):
     """Representation of a Hottoh Sensor"""
     def __init__(self, hottoh, name, icon, device_class, unit_of_measurement):
         """Initialize the Sensor."""
+        HottohEntity.__init__(self, hottoh)
         SensorEntity.__init__(self)
         self.api = hottoh
         self.nameSet = name
@@ -105,12 +99,11 @@ class HottohSensor(SensorEntity):
             attr["max_value"] = self.max_temp
         return attr
 
-
-class HottohActionSensor(SensorEntity):
-    SCAN_INTERVAL = timedelta(seconds=10)
+class HottohActionSensor(HottohEntity, SensorEntity):
     """Representation of a Hottoh Status"""
     def __init__(self, hottoh):
         """Initialize the Sensor."""
+        HottohEntity.__init__(self, hottoh)
         SensorEntity.__init__(self)
         self.api = hottoh
     @property

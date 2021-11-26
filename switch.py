@@ -1,14 +1,11 @@
 """Support for Hottoh Climate Entity."""
 from datetime import timedelta
-import json
 import logging
-import asyncio
-import async_timeout
 
-from homeassistant.helpers.entity import Entity
 from homeassistant.components.switch import SwitchEntity
 
 from .const import DOMAIN, HOTTOH_SESSION
+from . import HottohEntity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,11 +19,11 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     async_add_entities([switch_on, eco_mode], True)
 
-class HottohIsOnSwitch(SwitchEntity):
-    SCAN_INTERVAL = timedelta(seconds=10)
+class HottohIsOnSwitch(HottohEntity, SwitchEntity):
     """Representation of a Hottoh Status"""
     def __init__(self, hottoh):
         """Initialize the Sensor."""
+        HottohEntity.__init__(self, hottoh)
         SwitchEntity.__init__(self)
         self.api = hottoh
     @property
@@ -51,11 +48,11 @@ class HottohIsOnSwitch(SwitchEntity):
     def turn_off(self):
         self.api.setOff()
 
-class HottohEcoModeSwitch(SwitchEntity):
-    SCAN_INTERVAL = timedelta(seconds=10)
+class HottohEcoModeSwitch(HottohEntity, SwitchEntity):
     """Representation of a Hottoh Status"""
     def __init__(self, hottoh):
         """Initialize the Sensor."""
+        HottohEntity.__init__(self, hottoh)
         SwitchEntity.__init__(self)
         self.api = hottoh
     @property

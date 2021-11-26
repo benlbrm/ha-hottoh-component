@@ -32,6 +32,7 @@ from homeassistant.const import (
 
 
 from .const import DOMAIN, HOTTOH_SESSION, CONF_AWAY_TEMP, CONF_COMFORT_TEMP, CONF_ECO_TEMP
+from . import HottohEntity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities, discovery_in
 
     async_add_entities([climate], True)
 
-class HottohDevice(ClimateEntity):
+class HottohDevice(HottohEntity, ClimateEntity):
     """Reprensentation of the Stove Device """
     _attr_hvac_modes = [HVAC_MODE_HEAT, HVAC_MODE_OFF]
     _attr_max_temp = 30
@@ -56,20 +57,16 @@ class HottohDevice(ClimateEntity):
     _attr_target_temperature_step = PRECISION_HALVES
     _attr_temperature_unit = TEMP_CELSIUS
     _attr_preset_mode = PRESET_NONE
-    SCAN_INTERVAL = timedelta(seconds=10)
 
     """Representation of a Stove Climate"""
     def __init__(self, hottoh, away_temp, eco_temp, comfort_temp):
         """Initialize the Climate."""
+        HottohEntity.__init__(self, hottoh)
         ClimateEntity.__init__(self)
         self.api = hottoh
         self._away_temp = away_temp
         self._eco_temp = eco_temp
         self._comfort_temp = comfort_temp
-
-    @property
-    def should_poll(self) -> bool:        
-        return True
 
     @property
     def unique_id(self):
@@ -196,13 +193,3 @@ class HottohDevice(ClimateEntity):
                 self.api.set_speed_fan_1, fan_mode
             )
 
-    @property
-    def device_info(self):
-        """Return information to link this entity with the correct device."""
-        return {
-            "identifiers": {(DOMAIN, self.name)},
-            "name": self.name,
-            "sw_version": self.api.get_firmware(),
-            "model": self.api.get_manufacturer(),
-            "manufacturer": self.api.get_manufacturer(),
-        }

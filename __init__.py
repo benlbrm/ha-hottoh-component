@@ -195,3 +195,30 @@ async def async_update_options(hass, config_entry):
 
 class CannotConnect(exceptions.HomeAssistantError):
     """Error to indicate we cannot connect."""
+
+class HottohEntity(Entity):
+    SCAN_INTERVAL = timedelta(seconds=10)
+
+    def __init__(self, hottoh):
+        """Initialize the Climate."""
+        Entity.__init__(self)
+        self.api = hottoh
+
+    @property
+    def should_poll(self):
+        return True
+
+    @property
+    def available(self):
+        return self.api.client.is_connected()
+
+    @property
+    def device_info(self):
+        """Return information to link this entity with the correct device."""
+        return {
+            "identifiers": {(DOMAIN, self.api.get_name())},
+            "name": self.api.get_name(),
+            "sw_version": self.api.get_firmware(),
+            "model": self.api.get_manufacturer(),
+            "manufacturer": self.api.get_manufacturer(),
+        }
