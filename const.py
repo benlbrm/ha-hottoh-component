@@ -1,7 +1,7 @@
 """Constants for the HottoH integration."""
 
 DOMAIN = "hottoh"
-PLATFORMS: list[str] = ["climate", "sensor", "switch"]
+PLATFORMS: list[str] = ["climate", "sensor", "switch", "binary_sensor"]
 HOTTOH_DEFAULT_HOST = "192.168.4.10"
 HOTTOH_DEFAULT_PORT = 5001
 HOTTOH_SESSION = "hottoh_session"
