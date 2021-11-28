@@ -20,20 +20,29 @@
                 }
             }
         }
-    }
-    ,
-    "state": {
-        "_": {
-            "check": "Vérification",
-            "clean_all": "Nettoyage",
-            "loading": "Chargement",
-            "waiting": "Attente",
-            "ignition": "Allumage",
-            "stabilization": "Stabilisation",
-            "heating": "Feu!",
-            "stopping": "Arrêt",
-            "idle": "Standby",
-            "end_pellet": "Plus de Pellet"
+    },
+    "options": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "host": "Host",
+                    "password": "Password",
+                    "username": "Username",
+                    "away_temp": "Away Temp",
+                    "comfort_temp": "Comfort Temp",
+                    "eco_temp": "Eco Temp"
+                },
+                "description": "Configuration of Hottoh device",
+                "title": "Hottoh"
+            }
         }
     }
 }
