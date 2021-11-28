@@ -1,6 +1,6 @@
 {
   "domain": "hottoh",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "name": "HottoH",
   "config_flow": true,
   "documentation": "https://github.com/benlbrm/ha-hottoh-component",
