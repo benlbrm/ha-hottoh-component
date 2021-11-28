@@ -16,11 +16,7 @@ from homeassistant.const import (
     )
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-    DataUpdateCoordinator,
-    UpdateFailed,
-)
+from homeassistant.helpers.entity import Entity
 
 from .const import (
     DOMAIN, 
