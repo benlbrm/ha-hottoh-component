@@ -9,7 +9,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PORT, CONF_NAME
 from homeassistant.components.dhcp import IP_ADDRESS, MAC_ADDRESS
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
@@ -23,11 +23,30 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST, default=HOTTOH_DEFAULT_HOST): str,
         vol.Required(CONF_PORT, default=HOTTOH_DEFAULT_PORT): int,
-        vol.Optional(CONF_AWAY_TEMP, default=15.00): vol.Coerce(float),
-        vol.Optional(CONF_COMFORT_TEMP, default=20.00): vol.Coerce(float),
-        vol.Optional(CONF_ECO_TEMP, default=18.00): vol.Coerce(float),
+        vol.Required(CONF_AWAY_TEMP, default=15.00): vol.Coerce(float),
+        vol.Required(CONF_COMFORT_TEMP, default=20.00): vol.Coerce(float),
+        vol.Required(CONF_ECO_TEMP, default=18.00): vol.Coerce(float),
     }
 )
+
+def hottoh_config_shema(options: dict = {}) -> dict:
+    """Return a schema for Hottoh configuration options."""
+    if not options:
+        options = {
+            CONF_HOST: HOTTOH_DEFAULT_HOST,
+            CONF_PORT: HOTTOH_DEFAULT_PORT,
+            CONF_AWAY_TEMP: 15.00,
+            CONF_COMFORT_TEMP: 20.00,
+            CONF_ECO_TEMP: 18.00
+        }
+    
+    return {
+        vol.Required(CONF_HOST, default=options.get(CONF_HOST, HOTTOH_DEFAULT_HOST)): str,
+        vol.Required(CONF_PORT, default=options.get(CONF_PORT, HOTTOH_DEFAULT_PORT)): int,
+        vol.Optional(CONF_AWAY_TEMP, default=options.get(CONF_AWAY_TEMP)): vol.Coerce(float),
+        vol.Optional(CONF_COMFORT_TEMP, default=options.get(CONF_COMFORT_TEMP)): vol.Coerce(float),
+        vol.Optional(CONF_ECO_TEMP, default=options.get(CONF_ECO_TEMP)): vol.Coerce(float),
+    }
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
     """Validate the user input allows us to connect.
@@ -58,35 +77,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    # async def async_step_dhcp(self, discovery_info):
-    #     """Handle dhcp discovery."""
-    #     _LOGGER.debug(discovery_info)
-    #     host = discovery_info[IP_ADDRESS]
-    #     unique_id = discovery_info[MAC_ADDRESS].lower().replace(":", "")
-    #     await self.async_set_unique_id(unique_id)
-    #     self._abort_if_unique_id_configured(updates={CONF_HOST: host})
-
-    #     try:
-    #         info = await validate_input(self.hass, [host, HOTTOH_DEFAULT_PORT])
-
-    #     except CannotConnect:
-    #         return self.async_abort(reason="cannot_connect")
-
-    #     except OSError as err:
-    #         return self.async_abort(reason="unknown")
-
-    #     await self.async_set_device(info)
- 
-    #     return self.async_show_form(step_id="dhcp", errors=None)
-
-
-    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_user(self, user_input) -> FlowResult:
         """Handle the initial step."""
         if user_input is None:
             return self.async_show_form(
                 step_id="user", data_schema=STEP_USER_DATA_SCHEMA
             )
-
         errors = {}
 
         try:
@@ -104,6 +100,31 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry):
+        return HottohOptionsFlowHandler(config_entry)
+
+class HottohOptionsFlowHandler(config_entries.OptionsFlow):
+    """Hottoh config flow options handler."""
+
+    def __init__(self, config_entry):
+        """Initialize Hottoh options flow."""
+        self.config_entry = config_entry
+
+    async def async_step_init(self, user_input=None):
+        """Manage the options."""
+        return await self.async_step_user()
+
+    async def async_step_user(self, user_input=None):
+        """Handle a flow initialized by the user."""
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        schema = hottoh_config_shema(self.config_entry.options)
+
+        return self.async_show_form(step_id="user", data_schema=vol.Schema(schema))
 
 class InvalidAuth(HomeAssistantError):
     """Error to indicate there is invalid auth."""

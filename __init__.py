@@ -31,10 +31,10 @@ from hottohpy import (
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup(hass: HomeAssistant, config: dict):
-    """Set up the Hottoh component."""
-    hass.data.setdefault(DOMAIN, {})
-    return True
+# async def async_setup(hass: HomeAssistant, config: dict):
+#     """Set up the Hottoh component."""
+#     hass.data.setdefault(DOMAIN, {})
+#     return True
 
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up HottoH from a config entry."""

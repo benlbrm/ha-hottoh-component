@@ -1,19 +1,11 @@
 """Support for Hottoh Climate Entity."""
-from datetime import timedelta
 import json
 import logging
-import asyncio
-import async_timeout
-
-from homeassistant.helpers.entity import Entity
 
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
     HVAC_MODE_HEAT,
     HVAC_MODE_OFF,
-    CURRENT_HVAC_OFF,
-    CURRENT_HVAC_HEAT,
-    CURRENT_HVAC_IDLE,
     SUPPORT_TARGET_TEMPERATURE,
     SUPPORT_PRESET_MODE,
     SUPPORT_FAN_MODE,
@@ -26,7 +18,6 @@ from homeassistant.components.climate.const import (
 from homeassistant.const import (
     ATTR_TEMPERATURE,
     PRECISION_HALVES,
-    DEVICE_CLASS_TEMPERATURE,
     TEMP_CELSIUS,
 )
 
@@ -179,6 +170,7 @@ class HottohDevice(HottohEntity, ClimateEntity):
     @property 
     def fan_modes(self):
         return [
+            '0',
             '1',
             '2',
             '3',
