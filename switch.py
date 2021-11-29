@@ -16,9 +16,9 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     switch_on = HottohIsOnSwitch(hottoh)
     eco_mode = HottohEcoModeSwitch(hottoh)
-    chrono_mode = HottohEcoModeSwitch(hottoh)
+    chrono_mode = HottohChronoModeSwitch(hottoh)
 
-    async_add_entities([switch_on, eco_mode], True)
+    async_add_entities([switch_on, eco_mode, chrono_mode], True)
 
 class HottohIsOnSwitch(HottohEntity, SwitchEntity):
     """Representation of a Hottoh Status"""
@@ -90,7 +90,7 @@ class HottohChronoModeSwitch(HottohEntity, SwitchEntity):
         return self.api.get_name() + '_' + 'is_chrono_mode'
     @property
     def icon(self):
-        return "mdi:leaf"
+        return "mdi:watch"
     @property
     def is_on(self):
         return self.api.get_chrono_mode()
