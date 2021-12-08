@@ -156,9 +156,9 @@ async def async_connect_or_timeout(hass, hottoh):
         name = None
         with async_timeout.timeout(10):
             _LOGGER.debug("Initialize connection to Hottoh")
-            if not hottoh.is_connected:
+            if not hottoh.is_connected():
                 await hass.async_add_executor_job(hottoh.connect)
-            while not hottoh.is_connected or name is None:
+            while not hottoh.is_connected() or name is None:
                 # Waiting for connection and check datas ready
                 name = hottoh.get_name()
                 if name:
@@ -206,7 +206,7 @@ class HottohEntity(Entity):
 
     @property
     def available(self):
-        return self.api.client.is_connected()
+        return self.api.is_connected()
 
     @property
     def device_info(self):
