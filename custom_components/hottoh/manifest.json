@@ -4,6 +4,7 @@
   "name": "HottoH",
   "config_flow": true,
   "documentation": "https://github.com/benlbrm/ha-hottoh-component",
+  "issue_tracker": "https://github.com/benlbrm/ha-hottoh-component/issues",
   "requirements": [
     "hottohpy==0.0.28"
   ],
