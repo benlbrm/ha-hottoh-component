@@ -1,3 +1,6 @@
-﻿__pycache__
-hottohpy
-.vscode
+__pycache__
+pythonenv*
+venv
+.venv
+.coverage
+.idea
