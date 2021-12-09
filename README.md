@@ -29,8 +29,9 @@ Platform | Description
 {% if not installed %}
 ## Installation
 
-1. Click install.
-1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Hottoh".
+1. Add this repository to HACS.
+2. Click install.
+3. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Hottoh".
 
 {% endif %}
 
