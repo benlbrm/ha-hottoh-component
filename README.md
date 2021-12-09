@@ -4,7 +4,6 @@
 
 [![hacs][hacsbadge]][hacs]
 [![Project Maintenance][maintenance-shield]][user_profile]
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
@@ -42,11 +41,11 @@ Platform | Description
 
 ***
 
-[integration_hottoh]: https://github.com/benlbrm/hacs-hottoh
+[integration_hottoh]: https://github.com/benlbrm/ha-hottoh-component
 [buymecoffee]: https://www.buymeacoffee.com/benlbrm
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/benlbrm/hacs-hottoh.svg?style=for-the-badge
-[commits]: https://github.com/benlbrm/hacs-hottoh/commits/master
+[commits-shield]: https://img.shields.io/github/commit-activity/y/benlbrm/ha-hottoh-component.svg?style=for-the-badge
+[commits]: https://github.com/benlbrm/ha-hottoh-component/commits/master
 [hacs]: https://hacs.xyz
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [discord]: https://discord.gg/Qa5fW2R
@@ -54,9 +53,9 @@ Platform | Description
 [exampleimg]: example.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[license]: https://github.com/benlbrm/hacs-hottoh/blob/main/LICENSE
-[license-shield]: https://img.shields.io/github/license/benlbrm/hacs-hottoh.svg?style=for-the-badge
+[license]: https://github.com/benlbrm/ha-hottoh-component/blob/main/LICENSE
+[license-shield]: https://img.shields.io/github/license/benlbrm/ha-hottoh-component.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-benlbrm-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/benlbrm/hacs-hottoh.svg?style=for-the-badge
-[releases]: https://github.com/benlbrm/hacs-hottoh/releases
+[releases-shield]: https://img.shields.io/github/release/benlbrm/ha-hottoh-component.svg?style=for-the-badge
+[releases]: https://github.com/benlbrm/ha-hottoh-component/releases
 [user_profile]: https://github.com/benlbrm
