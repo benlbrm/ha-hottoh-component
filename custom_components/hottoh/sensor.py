@@ -1,10 +1,11 @@
 """Support for Hottoh Climate Entity."""
+
 import logging
 
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.components.sensor.const import SensorDeviceClass
 
-from homeassistant.const import TEMP_CELSIUS, PERCENTAGE
+from homeassistant.const import UnitOfTemperature, PERCENTAGE
 
 from .const import DOMAIN, HOTTOH_SESSION
 from . import HottohEntity
@@ -25,7 +26,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
             "smoke_temperature",
             "mdi:smoke",
             SensorDeviceClass.TEMPERATURE,
-            TEMP_CELSIUS,
+            UnitOfTemperature.CELSIUS,
         )
     )
     entities.append(HottohSensor(hottoh, "speed_fan_smoke", "mdi:fan", "", "g/m"))
@@ -37,7 +38,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 "temperature_room_1",
                 "mdi:thermometer",
                 SensorDeviceClass.TEMPERATURE,
-                TEMP_CELSIUS,
+                UnitOfTemperature.CELSIUS,
             )
         )
     if hottoh.isTempRoom2Enabled():
@@ -47,7 +48,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 "temperature_room_2",
                 "mdi:thermometer",
                 SensorDeviceClass.TEMPERATURE,
-                TEMP_CELSIUS,
+                UnitOfTemperature.CELSIUS,
             )
         )
     if hottoh.isTempRoom3Enabled():
@@ -57,7 +58,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 "temperature_room_3",
                 "mdi:thermometer",
                 SensorDeviceClass.TEMPERATURE,
-                TEMP_CELSIUS,
+                UnitOfTemperature.CELSIUS,
             )
         )
     if hottoh.isTempWaterEnabled():
@@ -67,7 +68,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 "water_temperature",
                 "mdi:water-boiler",
                 SensorDeviceClass.TEMPERATURE,
-                TEMP_CELSIUS,
+                UnitOfTemperature.CELSIUS,
             )
         )
 
