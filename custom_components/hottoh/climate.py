@@ -1,26 +1,22 @@
 """Support for Hottoh Climate Entity."""
-import json
+
 import logging
 
 from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
-    HVAC_MODE_HEAT,
-    HVAC_MODE_OFF,
-    SUPPORT_TARGET_TEMPERATURE,
-    SUPPORT_PRESET_MODE,
-    SUPPORT_FAN_MODE,
+    HVACMode,
+    ClimateEntityFeature,
     PRESET_AWAY,
     PRESET_NONE,
     PRESET_ECO,
-    PRESET_BOOST,
     PRESET_COMFORT,
     ATTR_PRESET_MODE,
 )
 from homeassistant.const import (
     ATTR_TEMPERATURE,
     PRECISION_HALVES,
-    TEMP_CELSIUS,
+    UnitOfTemperature,
 )
 
 
@@ -52,17 +48,22 @@ async def async_setup_entry(
 
 
 class HottohDevice(HottohEntity, ClimateEntity, RestoreEntity):
-    """Reprensentation of the Stove Device """
+    """Reprensentation of the Stove Device"""
 
-    _attr_hvac_modes = [HVAC_MODE_HEAT, HVAC_MODE_OFF]
+    _attr_hvac_modes = [HVACMode.HEAT, HVACMode.OFF]
     _attr_max_temp = 30
     _attr_min_temp = 15
     _attr_supported_features = (
-        SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE | SUPPORT_FAN_MODE
+        ClimateEntityFeature.TARGET_TEMPERATURE
+        | ClimateEntityFeature.PRESET_MODE
+        | ClimateEntityFeature.FAN_MODE
+        | ClimateEntityFeature.TURN_OFF
+        | ClimateEntityFeature.TURN_ON
     )
     _attr_target_temperature_step = PRECISION_HALVES
-    _attr_temperature_unit = TEMP_CELSIUS
+    _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_preset_mode = PRESET_NONE
+    _enable_turn_on_off_backwards_compatibility = False
 
     """Representation of a Stove Climate"""
 
@@ -107,8 +108,8 @@ class HottohDevice(HottohEntity, ClimateEntity, RestoreEntity):
     @property
     def hvac_mode(self):
         if self.api.get_mode() == "on":
-            return HVAC_MODE_HEAT
-        return HVAC_MODE_OFF
+            return HVACMode.HEAT
+        return HVACMode.OFF
 
     @property
     def hvac_action(self):
@@ -117,7 +118,7 @@ class HottohDevice(HottohEntity, ClimateEntity, RestoreEntity):
     @property
     def icon(self) -> str:
         """Return nice icon for heater."""
-        if self.hvac_mode == HVAC_MODE_HEAT:
+        if self.hvac_mode == HVACMode.HEAT:
             return "mdi:fireplace"
         return "mdi:fireplace-off"
 
@@ -184,10 +185,10 @@ class HottohDevice(HottohEntity, ClimateEntity, RestoreEntity):
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        if hvac_mode == HVAC_MODE_HEAT:
+        if hvac_mode == HVACMode.HEAT:
             await self.hass.async_add_executor_job(self.api.set_on)
 
-        if hvac_mode == HVAC_MODE_OFF:
+        if hvac_mode == HVACMode.OFF:
             await self.hass.async_add_executor_job(self.api.set_off)
 
     @property
