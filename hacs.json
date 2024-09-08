@@ -1,10 +1,4 @@
 {
     "name": "HottoH",
-    "domains": [
-        "climate",
-        "sensor",
-        "switch",
-        "binary_sensor"
-    ],
     "render_readme": true
 }
