@@ -181,7 +181,7 @@ class HottohDevice(HottohEntity, ClimateEntity, RestoreEntity):
             await self.hass.async_add_executor_job(self.api.set_eco_mode_on)
 
         self._attr_preset_mode = preset_mode
-        await self.async_update_ha_state()
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
