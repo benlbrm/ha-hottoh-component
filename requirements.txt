@@ -1,5 +1,7 @@
-colorlog==6.8.2
-homeassistant==2024.6.0
+colorlog==6.9.0
+homeassistant==2025.6.0
 pip>=21.3.1
-ruff==0.6.3
+ruff==0.11.13
 hottohpy==0.0.28
+crcmod
+bitstring
