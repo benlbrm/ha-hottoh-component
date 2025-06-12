@@ -57,10 +57,11 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
         CANCEL_STOP: cancel_stop,
     }
 
-    for component in PLATFORMS:
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setups(config_entry, component)
-        )
+    # for component in PLATFORMS:
+    #     hass.async_create_task(
+    #         hass.config_entries.async_forward_entry_setups(config_entry, component)
+    #     )
+    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
 
     if not config_entry.update_listeners:
         config_entry.add_update_listener(async_update_options)
