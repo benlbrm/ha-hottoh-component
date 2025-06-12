@@ -1,4 +1,5 @@
 """The HottoH integration."""
+
 from __future__ import annotations
 
 import asyncio
@@ -12,22 +13,14 @@ from homeassistant.const import (
     CONF_HOST,
     CONF_PORT,
     CONF_NAME,
-    EVENT_HOMEASSISTANT_STOP
-    )
+    EVENT_HOMEASSISTANT_STOP,
+)
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 
-from .const import (
-    DOMAIN, 
-    PLATFORMS,
-    HOTTOH_SESSION,
-    CANCEL_STOP
-)
-from hottohpy import (
-    Hottoh, 
-    HottohConnectionError
-)
+from .const import DOMAIN, PLATFORMS, HOTTOH_SESSION, CANCEL_STOP
+from hottohpy import Hottoh, HottohConnectionError
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -35,6 +28,7 @@ _LOGGER = logging.getLogger(__name__)
 #     """Set up the Hottoh component."""
 #     hass.data.setdefault(DOMAIN, {})
 #     return True
+
 
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up HottoH from a config entry."""
@@ -65,7 +59,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
 
     for component in PLATFORMS:
         hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(config_entry, component)
+            hass.config_entries.async_forward_entry_setups(config_entry, component)
         )
 
     if not config_entry.update_listeners:
@@ -137,11 +131,14 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
 
     return True
 
+
 async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     for component in PLATFORMS:
-        unload_ok = await hass.config_entries.async_forward_entry_unload(config_entry, component)
-                
+        unload_ok = await hass.config_entries.async_forward_entry_unload(
+            config_entry, component
+        )
+
     if unload_ok:
         domain_data = hass.data[DOMAIN][config_entry.entry_id]
         domain_data[CANCEL_STOP]()
@@ -149,6 +146,7 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
         hass.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
+
 
 async def async_connect_or_timeout(hass, hottoh):
     """Connect to HottoH."""
@@ -166,7 +164,7 @@ async def async_connect_or_timeout(hass, hottoh):
                 await asyncio.sleep(1)
 
             name = hottoh.get_name()
-            
+
     except HottohConnectionError as err:
         _LOGGER.debug("Error to connect to Hottoh: %s", err)
         raise CannotConnect from err
@@ -178,6 +176,7 @@ async def async_connect_or_timeout(hass, hottoh):
 
     return {HOTTOH_SESSION: hottoh, CONF_NAME: name}
 
+
 async def async_disconnect_or_timeout(hass, hottoh):
     """Disconnect to Hottoh."""
     _LOGGER.debug("Disconnect Hottoh")
@@ -185,12 +184,15 @@ async def async_disconnect_or_timeout(hass, hottoh):
         await hass.async_add_executor_job(hottoh.disconnect)
     return True
 
+
 async def async_update_options(hass, config_entry):
     """Update options."""
     await hass.config_entries.async_reload(config_entry.entry_id)
 
+
 class CannotConnect(exceptions.HomeAssistantError):
     """Error to indicate we cannot connect."""
+
 
 class HottohEntity(Entity):
     SCAN_INTERVAL = timedelta(seconds=10)
